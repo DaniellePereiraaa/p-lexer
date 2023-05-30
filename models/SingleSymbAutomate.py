@@ -12,7 +12,6 @@ class SingleSymbAutomate(Automate):
 
     '.' (ponto)
     ',' (virugla)
-    ':' (dois pontos)
     ';' (ponto e vírgula)
     '(' (abre parentesis)
     ')' (fecha parentesis)
@@ -27,7 +26,6 @@ class SingleSymbAutomate(Automate):
         self.pcnt_dict = {
             '.': Tokens.DOT,
             ',': Tokens.COMMA,
-            ':': Tokens.COLON,
             ';': Tokens.SEMICOL,
             '(': Tokens.OPEN_PAR,
             ')': Tokens.CLOSE_PAR,
@@ -40,6 +38,6 @@ class SingleSymbAutomate(Automate):
             logger.critical(' De alguma forma, o automato de pontuacao foi selecionado erroneamente.')
             sys.exit(1)
         
-        return (self.pcnt_dict[c],None)
+        return (c,self.pcnt_dict[c])
         
         

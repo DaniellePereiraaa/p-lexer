@@ -1,3 +1,5 @@
+import logging as logger
+
 from models.GenericAutomate import Automate
 from utility.consts import CharGroup, Tokens, RESERVED_WORDS
 
@@ -32,10 +34,11 @@ class IdentAutomate(Automate):
         # INFO :Estado de reconhecimento do identificador
         if self.get_state() == self.States.IDENT_READING:
 
-            if c not in CharGroup.LETTER and c not in CharGroup.NUMBER:
+            if (c not in CharGroup.LETTER) and (c not in CharGroup.NUMBER):
+                logger.debug(f' {c} não pertence mais ao identificador')
                 self.set_state(self.States.IDENT_COMPLETE)
                 self.set_previous_char(c)
-                self.process_state(c)
+                return self.process_state(c)
             
             else:
                 self.token_value += c
@@ -45,7 +48,7 @@ class IdentAutomate(Automate):
         elif self.get_state() == self.States.IDENT_COMPLETE:
 
             if self.token_value in RESERVED_WORDS:
-                return (RESERVED_WORDS[self.token_value],None)
+                return (self.token_value, RESERVED_WORDS[self.token_value])
             
-            return (Tokens.ID,self.token_value)
+            return (self.token_value,Tokens.ID)
         

@@ -1,3 +1,4 @@
+import logging as logger
 from abc import ABC,abstractclassmethod
 
 class Automate:
@@ -20,9 +21,10 @@ class Automate:
         pass
 
     def set_state(self,state_code:int ) -> None:
+        logger.debug(f' Alteração de estado de {self.__curr_state} para {state_code}')
         self.__curr_state = state_code
     
-    def get_state(self) -> int:
+    def get_state(self) -> int: 
         return self.__curr_state
     
     def set_previous_char(self,c:str) -> None:

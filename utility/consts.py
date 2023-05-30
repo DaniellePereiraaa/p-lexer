@@ -12,38 +12,80 @@ RESERVED_WORDS: dicionário de palavras reservadas da linguagem, com seus respec
 
 # CONSTANTES DE TOKEN
 class Tokens:
-    NUM_INT = 'TK_NUM_INT'
-    NUM_REAL = 'TK_NUM_REAL'
-    ID = 'TK_IDENT'
-    DOT = 'TK_DOT'
-    COMMA = 'TK_COMMA'
-    COLON = 'TK_COLON'
-    SEMICOL = 'TK_SEMICOL'
-    OPEN_PAR = 'TK_OPEN_PAR'
-    CLOSE_PAR = 'TK_CLOSE_PAR'
-    OPEN_BRKT = 'TK_OPEN_BRKT'
-    CLOSE_BRKT = 'TK_CLOSE_BRKT'
+    NUM_INT = 'NUM_INT'
+    NUM_REAL = 'NUM_REAL'
+    NUM_ERROR = 'erro(declaracao de numero invalida)'
 
+    STRING = 'STRING'
 
+    ID = 'ID'
 
+    DOT = 'SIMB_PNT'
+    COMMA = 'SIMB_VGL'
+    
+    SEMICOL = 'SIMB_PV'
+    OPEN_PAR = 'SIMB_OPN_PAR'
+    CLOSE_PAR = 'SIMB_CLS_PAR'
+    OPEN_BRKT = 'SIMB_OPN_COLC'
+    CLOSE_BRKT = 'SIMB_CLS_COLC'
+
+    COMMENT = 'SIMB_COMENTARIO'
+    COMMENT_ERROR = 'erro(fim do comentario nao encontrado)'
+
+    COLON = 'SIMB_DP'
+    SET = 'SIMB_ATRIB'
+    GREATER = 'SIMB_MAIOR'
+    GREATER_EQ = 'SIMB_MAIOR_IGUAL'
+    LOWER = 'SIMB_MENOR'
+    LOWER_EQ = 'SIMB_MENOR_IGUAL'
+    NOT = 'SIMB_NEGACAO'
+    NOT_EQ = 'SIMB_DIFERENTE'
+    EQUALS = 'SIMB_IGUAL'
+
+    EQ_ERROR = "erro(simbolo '=' nao reconhecido)"
+
+    OP_SUM = 'SIMB_SOMA'
+    OP_SUB = 'SIMB_SUB'
+    OP_DIV = 'SIMB_DIV'
+    OP_MUL = 'SIMB_MULT'
+    OP_MOD = 'SIMB_RESTO'
+    
 
 # IDENTIFICADORES DE AUTOMATOS
 class Automates:
     NUMBER = 1
     IDENT = 2
     SINGLE_SYMB = 3
-
+    COMMENT = 4
+    COMPARATOR = 5
+    OPERATOR = 6
+    STRING =7
 
 
 # AGRUPAMENTO DE TIPOS DE CARACTERES
 class CharGroup:
     NUMBER = '1234567890'
     LETTER = 'abcdefghijklmnopqrstuvwxyz_'
-    SINGLE_SYMB = '.,:;()[]'
+    SINGLE_SYMB = '.,;()[]'
+    COMPARATORS = ':=><!'
+    OPERATORS = '*+-/%'
 
 # DICIONARIO DE PALAVRAS RESERVADAS
 RESERVED_WORDS = {
-    "program":"TK_PROGRAM",
-    "for":"TK_FOR",
-    "end":"TK_END"
+    "program":"SIMB_PROGRAM",
+    "for":"SIMB_FOR",
+    "var":"SIMB_VAR",
+    "end":"SIMB_END",
+    "begin":"SIMB_BEGIN",
+    "boolean":"SIMB_TIPO",
+    "integer":"SIMB_TIPO",
+    "real":"SIMB_TIPO",
+    "string":"SIMB_TIPO",
+    "while":"SIMB_WHILE",
+    "if":"SIMB_IF",
+    "else":"SIMB_ELSE",
+    "const":"SIMB_CONST",
+    "do":"SIMB_DO",
+    "procedure":"SIMB_PROCEDURE",
+    "then":"SIMB_THEN"
 }
