@@ -1,7 +1,7 @@
 import logging as logger
 import sys
 
-from models.GenericAutomate import Automate
+from models.lexic.GenericAutomate import Automate
 from utility.consts import Tokens
 
 class StringAutomate(Automate):
@@ -33,6 +33,3 @@ class StringAutomate(Automate):
 
         elif self.get_state() == self.States.STRING_COMPLETE:
             return (self.token_value,Tokens.STRING)
-
-        
-        

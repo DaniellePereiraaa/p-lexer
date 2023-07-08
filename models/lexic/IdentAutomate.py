@@ -1,6 +1,6 @@
 import logging as logger
 
-from models.GenericAutomate import Automate
+from models.lexic.GenericAutomate import Automate
 from utility.consts import CharGroup, Tokens, RESERVED_WORDS
 
 class IdentAutomate(Automate):
@@ -51,4 +51,3 @@ class IdentAutomate(Automate):
                 return (self.token_value, RESERVED_WORDS[self.token_value])
             
             return (self.token_value,Tokens.ID)
-        

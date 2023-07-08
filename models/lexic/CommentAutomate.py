@@ -1,7 +1,7 @@
 import logging as logger
 import sys
 
-from models.GenericAutomate import Automate
+from models.lexic.GenericAutomate import Automate
 from utility.consts import Tokens
 
 class CommentAutomate(Automate):
@@ -31,6 +31,4 @@ class CommentAutomate(Automate):
                 self.process_state(c)
         
         elif self.get_state() == self.States.COMMMENT_ENDED:
-            return (self.token_value,Tokens.COMMENT)
-        
-        
+            return (self.token_value,Tokens.COMMENT)    

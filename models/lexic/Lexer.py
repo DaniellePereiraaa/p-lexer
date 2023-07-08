@@ -1,13 +1,13 @@
 import logging as logger
 
-from models.GenericAutomate import Automate
-from models.IdentAutomate import IdentAutomate
-from models.SingleSymbAutomate import SingleSymbAutomate
-from models.CommentAutomate import CommentAutomate
-from models.ComparatorAutomate import ComparatorAutomate
-from models.NumberAutomate import   NumberAutomate
-from models.OperatorAutomate import OperatorAutomate
-from models.StringAutomate import StringAutomate
+from models.lexic.GenericAutomate import Automate
+from models.lexic.IdentAutomate import IdentAutomate
+from models.lexic.SingleSymbAutomate import SingleSymbAutomate
+from models.lexic.CommentAutomate import CommentAutomate
+from models.lexic.ComparatorAutomate import ComparatorAutomate
+from models.lexic.NumberAutomate import   NumberAutomate
+from models.lexic.OperatorAutomate import OperatorAutomate
+from models.lexic.StringAutomate import StringAutomate
 
 from utility import consts 
 
@@ -214,10 +214,4 @@ class Lexer(Automate):
         
         self.free_automate()
         self.set_state(self.States.INITIAL)
-        return token
-        
-
-
-    
-    
-    
+        return token 

@@ -1,7 +1,7 @@
 import logging as logger
 import sys
 
-from models.GenericAutomate import Automate
+from models.lexic.GenericAutomate import Automate
 from utility.consts import Tokens
 
 class ComparatorAutomate(Automate):
@@ -128,13 +128,3 @@ class ComparatorAutomate(Automate):
         # LABEL: Processamento estado de GREATER_EQ (leu '==')
         elif self.get_state() == self.States.EQUALS:
             return ('==',Tokens.EQUALS)
-
-        
-            
-            
-        
-        
-
-
-            
-        

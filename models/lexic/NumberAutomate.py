@@ -1,7 +1,7 @@
 import logging as logger
 import sys
 
-from models.GenericAutomate import Automate
+from models.lexic.GenericAutomate import Automate
 from utility.consts import Tokens , CharGroup
 
 class NumberAutomate(Automate):
