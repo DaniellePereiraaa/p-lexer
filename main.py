@@ -6,7 +6,7 @@ from utility.args import get_args
 from models.syntatic.Synt import Synt
 
 # Configuração de logger
-logger.basicConfig(encoding='utf-8', level=logger.WARN)
+logger.basicConfig(encoding='utf-8', level=logger.INFO)
 
 if __name__ == '__main__':
 
@@ -14,7 +14,6 @@ if __name__ == '__main__':
 
     file_path = './test/code1.in'
     out_file_path = None
-
     if not os.path.exists(file_path):
         logger.critical(f" O arquivo informado ({file_path}) não foi encontrado.")
         sys.exit(1)

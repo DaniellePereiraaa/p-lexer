@@ -30,11 +30,10 @@ class ComparatorAutomate(Automate):
         LOWER = 5 #     Estado final
         LOWER_EQ = 6 #  Estado final
 
-        NOT = 7 #       Estado final
+        NOT = 7 
         NOT_EQ = 8 #    Estado final
 
-        SINGLE_EQ = 9
-        EQUALS = 10 #   Estado final
+        EQUALS = 9 #    Estado final
 
 
     def __init__(self) -> None:
@@ -58,7 +57,7 @@ class ComparatorAutomate(Automate):
                 self.set_state(self.States.NOT)
             
             elif (c == '='):
-                self.set_state(self.States.SINGLE_EQ)
+                self.set_state(self.States.EQUALS)
             
             else:
                 logger.critical(' De alguma forma, o automato de comparadores foi selecionado erroneamente.')
@@ -117,14 +116,5 @@ class ComparatorAutomate(Automate):
             return ('!=', Tokens.NOT_EQ)
 
         # LABEL: Processamento do estado de NOT (recebeu '=' no primeiro estado)
-        elif self.get_state() == self.States.SINGLE_EQ:
-            if c != '=': 
-                self.set_previous_char(c)
-                return ('=',Tokens.EQ_ERROR)
-
-            self.set_state(self.States.EQUALS)
-            self.process_state(c)
-        
-        # LABEL: Processamento estado de GREATER_EQ (leu '==')
         elif self.get_state() == self.States.EQUALS:
-            return ('==',Tokens.EQUALS)
+            return ('=',Tokens.EQUALS)
