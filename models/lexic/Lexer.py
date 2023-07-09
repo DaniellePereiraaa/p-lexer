@@ -1,15 +1,15 @@
 import logging as logger
 
-from models.GenericAutomate import Automate
-from models.IdentAutomate import IdentAutomate
-from models.SingleSymbAutomate import SingleSymbAutomate
-from models.CommentAutomate import CommentAutomate
-from models.ComparatorAutomate import ComparatorAutomate
-from models.NumberAutomate import   NumberAutomate
-from models.OperatorAutomate import OperatorAutomate
-from models.StringAutomate import StringAutomate
+from models.lexic.GenericAutomate import Automate
+from models.lexic.IdentAutomate import IdentAutomate
+from models.lexic.SingleSymbAutomate import SingleSymbAutomate
+from models.lexic.CommentAutomate import CommentAutomate
+from models.lexic.ComparatorAutomate import ComparatorAutomate
+from models.lexic.NumberAutomate import   NumberAutomate
+from models.lexic.OperatorAutomate import OperatorAutomate
+from models.lexic.StringAutomate import StringAutomate
 
-from utility import consts 
+from utility.consts import *
 
 class Lexer(Automate):
     """ 
@@ -29,7 +29,7 @@ class Lexer(Automate):
 
     (<TOKEN_CODE>, <token_val>)
 
-    <TOKEN_CODE>:   definido em uma lista de constantes em utility.consts.
+    <TOKEN_CODE>:   definido em uma lista de constantes em utility.
     <token_val>:    valor do token, para caso de números e identificadores.
     """
 
@@ -93,25 +93,25 @@ class Lexer(Automate):
         """
         logger.debug(f' Selecionando automato {automate_id}')
 
-        if(automate_id == consts.Automates.NUMBER):
+        if(automate_id == Automates.NUMBER):
             self.__curr_automate = NumberAutomate()
 
-        elif(automate_id == consts.Automates.IDENT):
+        elif(automate_id == Automates.IDENT):
             self.__curr_automate = IdentAutomate()
 
-        elif(automate_id == consts.Automates.SINGLE_SYMB):
+        elif(automate_id == Automates.SINGLE_SYMB):
             self.__curr_automate = SingleSymbAutomate()
         
-        elif(automate_id == consts.Automates.COMPARATOR):
+        elif(automate_id == Automates.COMPARATOR):
             self.__curr_automate = ComparatorAutomate()
 
-        elif(automate_id == consts.Automates.COMMENT):
+        elif(automate_id == Automates.COMMENT):
             self.__curr_automate = CommentAutomate()
 
-        elif(automate_id == consts.Automates.OPERATOR):
+        elif(automate_id == Automates.OPERATOR):
             self.__curr_automate = OperatorAutomate()
         
-        elif(automate_id == consts.Automates.STRING):
+        elif(automate_id == Automates.STRING):
             self.__curr_automate = StringAutomate()
     
     def free_automate(self) -> None:
@@ -137,7 +137,7 @@ class Lexer(Automate):
         
         if self.is_undef_automate():
             logger.warn('Nao foi definido nenhum automato para processar.')
-            return None
+            return (None,None)
         
         return self.__curr_automate.process_state(c)
     
@@ -162,12 +162,12 @@ class Lexer(Automate):
 
 
 
-        token = None
+        token = (None,None)
         curr_char = None
 
-        while (token is None) & (curr_char != '\n'):
+        while (token[1] is None) & (curr_char != '\n'):
             if self.empty_buffer():
-                return
+                return (None,None)
             
             curr_char = self.get_next_char()
             logger.debug(f' Caractere em leitura: {curr_char}')
@@ -179,28 +179,25 @@ class Lexer(Automate):
                 if curr_char == ' ':
                     continue
 
-                if curr_char in consts.CharGroup.LETTER:
-                    self.set_automate(consts.Automates.IDENT)
+                if curr_char in CharGroup.LETTER:
+                    self.set_automate(Automates.IDENT)
 
-                elif curr_char in consts.CharGroup.NUMBER: 
-                    self.set_automate(consts.Automates.NUMBER)
+                elif curr_char in CharGroup.NUMBER: 
+                    self.set_automate(Automates.NUMBER)
 
-                elif curr_char in consts.CharGroup.SINGLE_SYMB:
-                    self.set_automate(consts.Automates.SINGLE_SYMB)
+                elif curr_char in CharGroup.SINGLE_SYMB:
+                    self.set_automate(Automates.SINGLE_SYMB)
 
-                elif curr_char in consts.CharGroup.COMPARATORS:
-                    self.set_automate(consts.Automates.COMPARATOR)
+                elif curr_char in CharGroup.COMPARATORS:
+                    self.set_automate(Automates.COMPARATOR)
                 
-                elif curr_char in consts.CharGroup.OPERATORS:
-                    self.set_automate(consts.Automates.OPERATOR)
+                elif curr_char in CharGroup.OPERATORS:
+                    self.set_automate(Automates.OPERATOR)
                 
-                elif (curr_char == '\'') | (curr_char == '"'):
-                    self.set_automate(consts.Automates.STRING)
-
                 elif curr_char == '{':
-                    self.set_automate(consts.Automates.COMMENT)
+                    self.set_automate(Automates.COMMENT)
                 else:
-                    token = (curr_char,f'erro(\'{curr_char}\' nao reconhecido)')
+                    token = (curr_char,Tokens.TOKEN_ERROR)
 
             if not self.is_undef_automate():
                 self.set_state(self.States.PROCESSING)
@@ -214,10 +211,4 @@ class Lexer(Automate):
         
         self.free_automate()
         self.set_state(self.States.INITIAL)
-        return token
-        
-
-
-    
-    
-    
+        return token 

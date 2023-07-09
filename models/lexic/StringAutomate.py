@@ -1,7 +1,7 @@
 import logging as logger
 import sys
 
-from models.GenericAutomate import Automate
+from models.lexic.GenericAutomate import Automate
 from utility.consts import Tokens
 
 class StringAutomate(Automate):
@@ -15,6 +15,7 @@ class StringAutomate(Automate):
     class States:
         STRING_READING = 0
         STRING_COMPLETE = 1
+        STRING_ERROR = 2
 
     def __init__(self) -> None:
         super().__init__()
@@ -24,8 +25,13 @@ class StringAutomate(Automate):
         if self.get_state() == self.States.STRING_READING:
             if self.token_value == '':
                 self.token_value += c
+                return (None,None)
             elif (c != self.token_value[0]): 
                 self.token_value += c
+                return (None,None)
+            elif(c == '\n'):
+                self.set_state(self.States.STRING_ERROR)
+                return self.process_state(c)
             else:
                 self.token_value += c
                 self.set_state(self.States.STRING_COMPLETE)
@@ -33,6 +39,5 @@ class StringAutomate(Automate):
 
         elif self.get_state() == self.States.STRING_COMPLETE:
             return (self.token_value,Tokens.STRING)
-
-        
-        
+        elif self.get_state() == self.States.STRING_ERROR:
+            return (self.token_value,Tokens.STRING_ERROR)
