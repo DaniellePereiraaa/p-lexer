@@ -25,8 +25,10 @@ class StringAutomate(Automate):
         if self.get_state() == self.States.STRING_READING:
             if self.token_value == '':
                 self.token_value += c
+                return (None,None)
             elif (c != self.token_value[0]): 
                 self.token_value += c
+                return (None,None)
             elif(c == '\n'):
                 self.set_state(self.States.STRING_ERROR)
                 return self.process_state(c)

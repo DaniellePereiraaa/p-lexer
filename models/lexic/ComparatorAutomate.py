@@ -30,10 +30,9 @@ class ComparatorAutomate(Automate):
         LOWER = 5 #     Estado final
         LOWER_EQ = 6 #  Estado final
 
-        NOT = 7 
-        NOT_EQ = 8 #    Estado final
+        NOT_EQ = 7 #    Estado final
 
-        EQUALS = 9 #    Estado final
+        EQUALS = 8 #    Estado final
 
 
     def __init__(self) -> None:
@@ -46,18 +45,18 @@ class ComparatorAutomate(Automate):
         if self.get_state() == self.States.COMPARATOR_INITIAL: 
             if (c == ':'):
                 self.set_state(self.States.COLON)
+                return (None,None)
 
             elif (c == '>'):
                 self.set_state(self.States.GREATER)
-            
+                return (None,None)
             elif (c == '<'):
                 self.set_state(self.States.LOWER)
-            
-            elif (c == '!'):
-                self.set_state(self.States.NOT)
-            
+                return (None,None)
             elif (c == '='):
                 self.set_state(self.States.EQUALS)
+                return (None,None)
+                
             
             else:
                 logger.critical(' De alguma forma, o automato de comparadores foi selecionado erroneamente.')
@@ -81,6 +80,9 @@ class ComparatorAutomate(Automate):
             if c == '=':
                 self.set_state(self.States.GREATER_EQ)
                 return self.process_state(c)
+            elif c == '>':
+                self.set_state(self.States.NOT_EQ)
+                return self.process_state(c)
             else:
                 self.set_previous_char(c)
                 return ('>',Tokens.GREATER)
@@ -101,19 +103,10 @@ class ComparatorAutomate(Automate):
         # LABEL: Processamento estado de GREATER_EQ (leu '>=')
         elif self.get_state() == self.States.LOWER_EQ:
             return ('<=',Tokens.LOWER_EQ)
-        
-        # LABEL: Processamento do estado de NOT (recebeu '!' no primeiro estado)
-        elif self.get_state() == self.States.NOT: 
-            if c == '=':
-                self.set_state(self.States.NOT_EQ)
-                return self.process_state(c)
-            else:
-                self.set_previous_char(c)
-                return ('!', Tokens.NOT)
-        
+     
         # LABEL: Processamento estado de GREATER_EQ (leu '!=')
         elif self.get_state() == self.States.NOT_EQ:
-            return ('!=', Tokens.NOT_EQ)
+            return ('<>', Tokens.NOT_EQ)
 
         # LABEL: Processamento do estado de NOT (recebeu '=' no primeiro estado)
         elif self.get_state() == self.States.EQUALS:

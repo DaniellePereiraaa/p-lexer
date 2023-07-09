@@ -33,9 +33,11 @@ class NumberAutomate(Automate):
         if (self.get_state() == self.States.NUMBER_INT_READING):
             if c in  CharGroup.NUMBER:
                 self.token_value += c
+                return (None,None)
             elif c == '.':
                 self.token_value += c
                 self.set_state(self.States.DOT_TRANSITION)
+                return (None,None)
             else:
                 self.set_previous_char(c)
                 self.set_state(self.States.NUMBER_INT_COMPLETE)
@@ -49,6 +51,7 @@ class NumberAutomate(Automate):
             if c in CharGroup.NUMBER:
                 self.token_value += c
                 self.set_state(self.States.NUMBER_FLOAT_READING)
+                return (None,None)
             else: 
                 self.set_previous_char(c)
                 return (self.token_value,Tokens.NUM_ERROR)
@@ -57,6 +60,7 @@ class NumberAutomate(Automate):
         elif (self.get_state() == self.States.NUMBER_FLOAT_READING):
             if c in  CharGroup.NUMBER:
                 self.token_value += c
+                return (None,None)
             else:
                 self.set_previous_char(c)
                 self.set_state(self.States.NUMBER_FLOAT_COMPLETE)

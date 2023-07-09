@@ -28,7 +28,9 @@ class CommentAutomate(Automate):
 
             if c == '}':
                 self.set_state(self.States.COMMMENT_ENDED)
-                self.process_state(c)
+                return self.process_state(c)
+            
+            return (None,None)
         
         elif self.get_state() == self.States.COMMMENT_ENDED:
             return (self.token_value,Tokens.COMMENT)    

@@ -42,7 +42,7 @@ class IdentAutomate(Automate):
             
             else:
                 self.token_value += c
-                return None
+                return (None,None)
         
         # INFO: Estado de identificador reconhecido e verificação de palavra reservada
         elif self.get_state() == self.States.IDENT_COMPLETE:
